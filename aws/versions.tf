@@ -15,6 +15,8 @@ provider "aws" {
       terraformed = "true"
       project = "simple_machine"
       author = "lazarovbonifacio"
+      ambiente = "portfolio"
+      centro_de_custo = "eng"
     }
   }
 }

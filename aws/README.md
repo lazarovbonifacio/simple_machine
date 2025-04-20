@@ -35,5 +35,11 @@ Antes de tudo, algumas observações importantes
 1. Acesso via SSM Manager
 2. Acesso via IP público
 
+# Referências
+
+- https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/connect-to-an-amazon-ec2-instance-by-using-session-manager.html
+- https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-public-parameters-ami.html
+- https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions
+
 \
 📍👦🏻😢👩🏼🙈
