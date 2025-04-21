@@ -7,7 +7,7 @@ Vamos precisar juntar os requisitos imediatos para a tarefa
 - Credenciais de acesso a uma conta da AWS com permissão
 - Terraform
 - VPC (módulo TF)
-- instância com IP público
+- Instância com IP público
 
 # Passo-a-passo
 
@@ -29,6 +29,12 @@ Antes de tudo, algumas observações importantes
 1. configurar módulo de VPC
 2. configurar módulo de EC2
 3. Implantação
+4. Instalação NGINX
+
+    ```bash
+    sudo dnf install nginx -y
+    sudo systemctl enable --now nginx
+    ```
 
 ## Validação
 
@@ -40,10 +46,8 @@ Antes de tudo, algumas observações importantes
 - https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/connect-to-an-amazon-ec2-instance-by-using-session-manager.html
 - https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-public-parameters-ami.html
 - https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions
-
-# TODO
-
-- habilitar criação de roles para a role devops
+- https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/5.8.0
+- https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/5.8.0
 
 \
 📍👦🏻😢👩🏼🙈

@@ -21,9 +21,10 @@ module "web_server_sg" {
 
   name        = "web_server"
   description = "Security group for web-server with HTTP ports open within VPC"
-  vpc_id      = module.vpc.default_vpc_id
+  vpc_id      = module.vpc.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
+  ingress_ipv6_cidr_blocks = [ "::/0" ]
 
   tags = {
     camada = "network"
@@ -36,11 +37,12 @@ module "ec2_instance" {
   version = "5.8.0"
 
   name = "simple_machine"
-
+  ami_ssm_parameter = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
   instance_type = "t3.micro"
 
+  create_eip = true
   subnet_id = module.vpc.public_subnets[0]
-  vpc_security_group_ids = [module.web_server_sg.security_group_id]  #, module.ssm_sg.security_group_id]
+  vpc_security_group_ids = [module.web_server_sg.security_group_id]
 
   create_iam_instance_profile = true
   iam_role_description        = "IAM role for EC2 instance"
@@ -64,7 +66,7 @@ module "vpc_endpoints" {
     replace(service, ".", "_") =>
     {
       service             = service
-      subnet_ids          = module.vpc.intra_subnets
+      subnet_ids          = module.vpc.public_subnets
       private_dns_enabled = true
       tags                = { Name = "simple_machine_${service}" }
     }
@@ -76,7 +78,7 @@ module "vpc_endpoints" {
   security_group_rules = {
     ingress_https = {
       description = "HTTPS from subnets"
-      cidr_blocks = module.vpc.intra_subnets_cidr_blocks
+      cidr_blocks = module.vpc.public_subnets_cidr_blocks
     }
   }
 
@@ -85,20 +87,3 @@ module "vpc_endpoints" {
     criticidade = "baixa"
   }
 }
-
-# module "ssm_sg" {
-#   source  = "terraform-aws-modules/security-group/aws"
-#   version = "~> 5.0"
-
-#   name        = "simple_machine_ssm"
-#   description = "Security Group for EC2 Instance Egress"
-
-#   vpc_id = module.vpc.vpc_id
-
-#   egress_rules = ["https-443-tcp"]
-
-#   tags = {
-#     camada = "network"
-#     criticidade = "baixa"
-#   }
-# }
