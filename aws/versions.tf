@@ -19,4 +19,8 @@ provider "aws" {
       centro_de_custo = "eng"
     }
   }
+  profile = "simple_machine"
+  assume_role {
+    role_arn = "arn:aws:iam::717840664376:role/DevOps"
+  }
 }

@@ -41,5 +41,9 @@ Antes de tudo, algumas observações importantes
 - https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-public-parameters-ami.html
 - https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions
 
+# TODO
+
+- habilitar criação de roles para a role devops
+
 \
 📍👦🏻😢👩🏼🙈
