@@ -1,12 +1,12 @@
 # Como subir uma máquina na AWS?
 
-Vamos precisar juntar os requisitos imediatos para a tarefa
+Vamos juntar os requisitos imediatos para a tarefa
 
 ## Requisitos
 
 - Credenciais de acesso a uma conta da AWS com permissão
-- Terraform
-- VPC (módulo TF)
+- Terraform ou OpenTofu
+- Camada de rede (VPC, SG e Endpoint)
 - Instância com IP público
 
 # Passo-a-passo
