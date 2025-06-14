@@ -11,16 +11,14 @@ Mostrar os requisitos mínimos para subir uma máquina em diferentes plataformas
 ## Requisitos básicos
 
 - Instalado
-    - Terraform 1.11
-    - vagrant
-    - virtualbox
-    - proxmox
+    - Terraform 1.11 ou OpenTofu 1.9
+    - libvirt
 - Contas em provedores de nuvem
     - AWS
     - Azure
     - GCP
     - Linode
-    - Magalu
+    - Digital Ocean
 
 \
 📍👦🏻😢👩🏼🙈
