@@ -50,6 +50,8 @@ module "ec2_instance" {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
 
+  user_data = "sudo dnf install nginx -y && sudo systemctl enable --now nginx"
+
   tags = {
     camada = "computacao"
     criticidade = "media"

@@ -70,4 +70,5 @@ module "vm" {
   sku_size = "Standard_A1_v2"
   source_image_reference = { "offer": "debian-12", "publisher": "Debian", "sku": "12", "version": "latest" }
   boot_diagnostics = true
+  user_data = base64encode("sudo apt update && sudo apt install nginx -y && sudo systemctl enable --now nginx")
 }
