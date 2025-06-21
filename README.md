@@ -20,5 +20,15 @@ Mostrar os requisitos mínimos para subir uma máquina em diferentes plataformas
     - Linode
     - Digital Ocean
 
+## Configuração
+
+Há três váriaveis obrigatórias sem valor padrão necessárias para a execução correta dos módulos.
+
+Além disso, garanta que a sua máquina está logada no provedor de nuvem.
+
+## Uso
+
+Basta incluir o módulo desejado e fornecer a variável de credencialmente, se necessário.
+
 \
 📍👦🏻😢👩🏼🙈

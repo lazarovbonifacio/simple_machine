@@ -1,6 +1,12 @@
 locals {
   default_location = "West US"
   default_name = "simple_machine"
+  default_user_data = <<-EOT
+  #!/bin/bash
+  sudo apt update
+  sudo apt install nginx -y
+  sudo systemctl enable --now nginx
+  EOT
   machine_name = "simpleMachine"
 }
 
@@ -70,4 +76,5 @@ module "vm" {
   sku_size = "Standard_A1_v2"
   source_image_reference = { "offer": "debian-12", "publisher": "Debian", "sku": "12", "version": "latest" }
   boot_diagnostics = true
+  user_data = base64encode(local.default_user_data)
 }
