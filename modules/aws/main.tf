@@ -1,3 +1,11 @@
+locals {
+  default_user_data = <<-EOT
+  #!/bin/bash
+  sudo dnf install nginx -y
+  sudo systemctl enable --now nginx
+  EOT
+}
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.19.0"
@@ -50,7 +58,7 @@ module "ec2_instance" {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
 
-  user_data = "sudo dnf install nginx -y && sudo systemctl enable --now nginx"
+  user_data = local.default_user_data
 
   tags = {
     camada = "computacao"
