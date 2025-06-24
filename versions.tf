@@ -37,6 +37,10 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
+provider "digitalocean" {
+  token = var.provider_do_token
+}
+
 terraform {
   required_providers {
     libvirt = {
@@ -50,6 +54,9 @@ terraform {
     }
     aws = {
       source = "hashicorp/aws"
+    }
+    digitalocean = {
+      source = "digitalocean/digitalocean"
     }
   }
 }

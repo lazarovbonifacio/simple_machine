@@ -17,7 +17,7 @@ Mostrar os requisitos mínimos para subir uma máquina em diferentes plataformas
     - AWS
     - Azure
     - GCP
-    - Linode
+    - Akamai (Linode)
     - Digital Ocean
 
 ## Configuração

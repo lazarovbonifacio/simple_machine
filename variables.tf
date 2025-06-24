@@ -9,3 +9,7 @@ variable "provider_azurerm_subscription_id" {
 variable "provider_google_project_id" {
   type = string
 }
+
+variable "provider_do_token" {
+  type = string
+}
