@@ -32,3 +32,33 @@ module "do" {
   instances = var.digitalocean.instance_count
   so        = var.digitalocean.so
 }
+
+module "alibaba" {
+  count     = var.alibaba != null ? 1 : 0
+  source    = "./modules/alibaba"
+  instances = var.alibaba.instance_count
+  so        = var.alibaba.so
+}
+
+module "oracle" {
+  count          = var.oracle != null ? 1 : 0
+  source         = "./modules/oracle"
+  instances      = var.oracle.instance_count
+  so             = var.oracle.so
+  compartment_id = var.oracle.compartment_id
+}
+
+module "linode" {
+  count     = var.linode != null ? 1 : 0
+  source    = "./modules/linode"
+  instances = var.linode.instance_count
+  so        = var.linode.so
+}
+
+module "ibm" {
+  count             = var.ibm != null ? 1 : 0
+  source            = "./modules/ibm"
+  instances         = var.ibm.instance_count
+  so                = var.ibm.so
+  resource_group_id = var.ibm.resource_group_id
+}

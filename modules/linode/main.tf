@@ -1,99 +1,26 @@
-locals {
-  default_user_data = <<-EOT
-  #!/bin/bash
-  sudo dnf install nginx -y
-  sudo systemctl enable --now nginx
-  EOT
-}
+resource "linode_instance" "instance" {
+  count           = var.instances
+  label           = "simple_machine-${count.index}"
+  image           = var.so == "ubuntu" ? "linode/ubuntu22.04" : "linode/debian11"
+  region          = "us-east"
+  type            = "g6-nanode-1"
+  authorized_keys = [] # Add keys if provided via variable, or rely on root_pass if essential. Omitting for basic structure.
 
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "5.19.0"
+  # Simple user data via stackscript or direct command isn't as direct as cloud-init usually, 
+  # but Linode supports cloud-init on newer images.
+  # Using stackscript_data or metadata is possible, but for simplicity:
+  # Linode instances often prefer StackScripts for bootstrapping.
+  # However, straightforward 'user_data' is not a direct property of linode_instance resource in the same way.
+  # But `metadata` block supports access token providing user_data to cloud-init if supported by image.
 
-  name = "simple_machine"
-  cidr = "172.27.0.0/16"
-
-  azs             = ["us-east-1b", "us-east-1c"]
-  private_subnets = ["172.27.16.0/20"]
-  public_subnets  = ["172.27.112.0/20"]
-
-  tags = {
-    camada = "network"
-    criticidade = "alta"
-  }
-}
-
-module "web_server_sg" {
-  source = "terraform-aws-modules/security-group/aws//modules/http-80"
-  version = "5.3.0"
-
-  name        = "web_server"
-  description = "Security group for web-server with HTTP ports open within VPC"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_ipv6_cidr_blocks = [ "::/0" ]
-
-  tags = {
-    camada = "network"
-    criticidade = "alta"
-  }
-}
-
-module "ec2_instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "5.8.0"
-
-  name = "simple_machine"
-  ami_ssm_parameter = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
-  instance_type = "t3.micro"
-
-  create_eip = true
-  subnet_id = module.vpc.public_subnets[0]
-  vpc_security_group_ids = [module.web_server_sg.security_group_id]
-
-  create_iam_instance_profile = true
-  iam_role_description        = "IAM role for EC2 instance"
-  iam_role_policies = {
-    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  }
-
-  user_data = local.default_user_data
-
-  tags = {
-    camada = "computacao"
-    criticidade = "media"
-  }
-}
-
-module "vpc_endpoints" {
-  source  = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
-  version = "5.19.0"
-
-  vpc_id = module.vpc.vpc_id
-
-  endpoints = { for service in toset(["ssm", "ssmmessages", "ec2messages"]) :
-    replace(service, ".", "_") =>
-    {
-      service             = service
-      subnet_ids          = module.vpc.public_subnets
-      private_dns_enabled = true
-      tags                = { Name = "simple_machine_${service}" }
-    }
-  }
-
-  create_security_group      = true
-  security_group_name_prefix = "simple_machine_vpc_endpoints_"
-  security_group_description = "VPC endpoint security group"
-  security_group_rules = {
-    ingress_https = {
-      description = "HTTPS from subnets"
-      cidr_blocks = module.vpc.public_subnets_cidr_blocks
-    }
-  }
-
-  tags = {
-    camada = "network"
-    criticidade = "baixa"
+  metadata {
+    user_data = base64encode(<<-EOF
+      #!/bin/bash
+      apt-get update
+      apt-get install -y nginx
+      systemctl enable nginx
+      systemctl start nginx
+      EOF
+    )
   }
 }

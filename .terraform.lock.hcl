@@ -1,6 +1,24 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/aliyun/alicloud" {
+  version = "1.268.0"
+  hashes = [
+    "h1:FWO45yLnSZMetu0wYxq8wfu0YPVwPpA1euo4lq3BN7Y=",
+    "zh:0f5e9b01a09282a459d09277c9f4b93a858c176192287b99b43c3b256fbccc29",
+    "zh:17c5ef7fc73613776ef46264930f1daeeeae53a359a94c5e15e3e0d7297c13ec",
+    "zh:41df1cb67ac34e3081e41049173f50da11d6e32ef39818865a4b9ec6a04f2a1a",
+    "zh:4c7be6d6ef80f9da43995901908b80aeb50c69180047705f77a4d49cb166513a",
+    "zh:591b1e6b35c3058a05f032884e9744482fd2a88fc53f785ca3569aac5454a2cd",
+    "zh:6d04148346867734da844355e7a32f40231b855412dd27221f04aa2623f3b6e9",
+    "zh:9ca3d1566988bf73c7781317059b6c4ed7e1d2a871bbea37d5fa5e3018443364",
+    "zh:a488f951f545cfb0c6f42ef31679945ef7e9c58d628cbf21bb4eaef070fa0b47",
+    "zh:da8df0cbfd9b2b79f989fe70850d6d68053e537b5da74e7f7b6f553385c6094d",
+    "zh:da9ed06a3c1fcfe6e4852dc9fcb9fcbe63f1400e1ddb8fe1056d0fa383324817",
+    "zh:f90e9777992d120b96ee144687b0e3b48e91396d0d95d3bb739574338da79a00",
+  ]
+}
+
 provider "registry.terraform.io/azure/azapi" {
   version     = "2.8.0"
   constraints = ">= 1.13.0, < 3.0.0"
@@ -190,6 +208,19 @@ provider "registry.terraform.io/hashicorp/tls" {
   ]
 }
 
+provider "registry.terraform.io/ibm-cloud/ibm" {
+  version = "1.87.2"
+  hashes = [
+    "h1:Zyl+Fv1PVLVbntCc5FVKpntXauvNoNtDxnT3T3a0Y2A=",
+    "zh:02d92b7a6ef61bf2b98bcec3fbaabe625e0252e016036cc91552d6aeb36d55c3",
+    "zh:1b2ba26a1cbb17426ce18cb7bc0de98cd8754b8de5b43b52d216b789534d9ece",
+    "zh:355ad427fc0120a051da87c2c0f026c293bf40344f69299769e226ec082849cd",
+    "zh:36ad7acf4357c2122779bf78a01adb715e5ad7c871a515abc6066c04d6b8e760",
+    "zh:65f4ef0f7bf55909f33e52b5ee3347446aaadd1a6acf4d13b9603ab35ce094d9",
+    "zh:87997fe049723b0da82e2b9f74f65dc993a7599052813df754af21e9e0fb19e7",
+  ]
+}
+
 provider "registry.terraform.io/linode/linode" {
   version = "3.8.0"
   hashes = [
@@ -208,5 +239,27 @@ provider "registry.terraform.io/linode/linode" {
     "zh:ea2856e173d7717b1179b8191809f232e1eaa26f372260cc5e659a510a12ecd2",
     "zh:fbf4dfcd9219695904bbfd2bacbb8ac5c31327bc3fed43b07b7438213eb77046",
     "zh:ffa420dc87859daccd6a8d93e058cf32815fd78de25b241a15fd2b125c325acb",
+  ]
+}
+
+provider "registry.terraform.io/oracle/oci" {
+  version = "7.30.0"
+  hashes = [
+    "h1:RRDWfOZkTCksSWq6W/OFGePGioHfHAVTXSkHapzJ7AI=",
+    "zh:1cc2a3961abe75ca2a116fa35b9759da161621783d907e08c3f0fc8755acb61c",
+    "zh:2058233f76371e62460558ba7259eb1d4ac7b7b33ba9cb46c2961014c5f36aba",
+    "zh:3b4d6ba7a8426cc9d99c7b30ce132ffdc0f6527fc465ebb01d246ddebd1ef677",
+    "zh:48bcf325cd0750b52894fd0b75a87ccc3eef4c0496fa12d73e9431376e2b6cf4",
+    "zh:5b1def4b6cf25baf8cf9d20f58e0fc0552e7ea025904e0adba67c4b8d039d73b",
+    "zh:5f9da74a493e402d330e022a28054d52ada1ce888718cb3c79cdcc7f16277e3a",
+    "zh:7e0f34ae223deaa4e72302c80b6c1f7e45b16164f69af9cd553cf2c745de42d1",
+    "zh:8527124facf7fe22a946f3bcdc84109ca1431c08742a127e92109cc32804ff86",
+    "zh:911f4ca7625590b9c41bf85efeecc8919606e885be4efe3672010cf2d9065b6d",
+    "zh:9b12af85486a96aedd8d7984b0ff811a4b42e3d88dad1a3fb4c0b580d04fa425",
+    "zh:c249c3b5768f60bf246f90acaa0cbeb479d7b94f7c4261da698c01f2de9585cb",
+    "zh:c3f1a630fabf2aba04aa9cdae3f11cfb474b593bd340b12ce5733b320147607a",
+    "zh:dd351c6025518938937489b3b31b0bd468b661e95acbe11a520357a6b39ce159",
+    "zh:de319dd7cb4c1a50cd4e8a54dca4f58e25957684514b675b36219a91d8a44e92",
+    "zh:f4a47f92c06fb4e12a053cc9f9fbfdb24dbc62926039f590bed437006d8c5bc5",
   ]
 }
