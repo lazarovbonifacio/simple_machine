@@ -1,10 +1,10 @@
 locals {
   default_name = "simple-machine"
-  zone = "us-central1-a"
+  zone         = "us-central1-a"
 }
 
 data "google_compute_machine_types" "this" {
-  zone = local.zone
+  zone   = local.zone
   filter = "guestCpus = 2 AND memoryMb = 2048 AND isSharedCpu = True"
 }
 
@@ -14,11 +14,12 @@ resource "google_service_account" "this" {
 }
 
 resource "google_compute_instance" "this" {
-  name         = local.default_name
+  count        = var.instances
+  name         = "${local.default_name}-${count.index}"
   machine_type = data.google_compute_machine_types.this.machine_types[0].name
   zone         = local.zone
-  
-  tags = [ "http-server" ]
+
+  tags = ["http-server"]
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-12"
@@ -31,7 +32,7 @@ resource "google_compute_instance" "this" {
     access_config {}
   }
 
-  metadata = { serial-port-enable = true }
+  metadata                = { serial-port-enable = true }
   metadata_startup_script = "sudo apt update && sudo apt install -y nginx && sudo systemctl enable --now nginx"
 
   service_account {
@@ -49,5 +50,5 @@ resource "google_compute_firewall" "this" {
     ports    = ["80"]
   }
 
-  source_ranges = [ "0.0.0.0/0" ]
+  source_ranges = ["0.0.0.0/0"]
 }

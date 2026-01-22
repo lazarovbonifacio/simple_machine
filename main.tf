@@ -11,14 +11,20 @@ module "aws" {
   instances = var.instance_count
 }
 
-# module "azure" {
-#   source = "./modules/azure"
-# }
+module "azure" {
+  count     = var.cloud_provider == "azure" ? 1 : 0
+  source    = "./modules/azure"
+  instances = var.instance_count
+}
 
-# module "gcp" {
-#   source = "./modules/gcp"
-# }
+module "gcp" {
+  count     = var.cloud_provider == "gcp" ? 1 : 0
+  source    = "./modules/gcp"
+  instances = var.instance_count
+}
 
-# module "do" {
-#   source = "./modules/digitalocean"
-# }
+module "do" {
+  count     = var.cloud_provider == "digitalocean" ? 1 : 0
+  source    = "./modules/digitalocean"
+  instances = var.instance_count
+}

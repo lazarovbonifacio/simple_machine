@@ -1,5 +1,5 @@
 variable "cloud_provider" {
-  description = "Cloud provider to provision resources. Options: aws, libvirt"
+  description = "Cloud provider to provision resources. Options: aws, libvirt, azure, gcp, digitalocean"
   type        = string
   default     = "libvirt"
 }
