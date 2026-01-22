@@ -41,6 +41,10 @@ provider "digitalocean" {
   token = var.provider_do_token
 }
 
+provider "linode" {
+  # token = "..."
+}
+
 terraform {
   required_providers {
     libvirt = {
@@ -57,6 +61,9 @@ terraform {
     }
     digitalocean = {
       source = "digitalocean/digitalocean"
+    }
+    linode = {
+      source = "linode/linode"
     }
   }
 }

@@ -18,24 +18,24 @@ module "vpc" {
   public_subnets  = ["172.27.112.0/20"]
 
   tags = {
-    camada = "network"
+    camada      = "network"
     criticidade = "alta"
   }
 }
 
 module "web_server_sg" {
-  source = "terraform-aws-modules/security-group/aws//modules/http-80"
+  source  = "terraform-aws-modules/security-group/aws//modules/http-80"
   version = "5.3.0"
 
   name        = "web_server"
   description = "Security group for web-server with HTTP ports open within VPC"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_ipv6_cidr_blocks = [ "::/0" ]
+  ingress_cidr_blocks      = ["0.0.0.0/0"]
+  ingress_ipv6_cidr_blocks = ["::/0"]
 
   tags = {
-    camada = "network"
+    camada      = "network"
     criticidade = "alta"
   }
 }
@@ -44,12 +44,14 @@ module "ec2_instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.8.0"
 
-  name = "simple_machine"
-  ami_ssm_parameter = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
-  instance_type = "t3.micro"
+  count = var.instances
 
-  create_eip = true
-  subnet_id = module.vpc.public_subnets[0]
+  name              = "simple_machine-${count.index}"
+  ami_ssm_parameter = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
+  instance_type     = "t3.micro"
+
+  create_eip             = true
+  subnet_id              = module.vpc.public_subnets[0]
   vpc_security_group_ids = [module.web_server_sg.security_group_id]
 
   create_iam_instance_profile = true
@@ -61,7 +63,7 @@ module "ec2_instance" {
   user_data = local.default_user_data
 
   tags = {
-    camada = "computacao"
+    camada      = "computacao"
     criticidade = "media"
   }
 }
@@ -93,7 +95,7 @@ module "vpc_endpoints" {
   }
 
   tags = {
-    camada = "network"
+    camada      = "network"
     criticidade = "baixa"
   }
 }
