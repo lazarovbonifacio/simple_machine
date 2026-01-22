@@ -73,10 +73,20 @@ module "vm" {
       }
     }
   }
-  os_disk                = { "caching" : "None", "storage_account_type" : "Standard_LRS" }
-  os_type                = "Linux"
-  sku_size               = "Standard_A1_v2"
-  source_image_reference = { "offer" : "debian-12", "publisher" : "Debian", "sku" : "12", "version" : "latest" }
-  boot_diagnostics       = true
-  user_data              = base64encode(local.default_user_data)
+  os_disk  = { "caching" : "None", "storage_account_type" : "Standard_LRS" }
+  os_type  = "Linux"
+  sku_size = "Standard_A1_v2"
+  source_image_reference = var.so == "ubuntu" ? {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
+    version   = "latest"
+    } : {
+    publisher = "Debian"
+    offer     = "debian-12"
+    sku       = "12"
+    version   = "latest"
+  }
+  boot_diagnostics = true
+  user_data        = base64encode(local.default_user_data)
 }

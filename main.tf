@@ -1,30 +1,34 @@
 module "libvirt" {
-  count     = var.cloud_provider == "libvirt" ? 1 : 0
+  count     = var.libvirt != null ? 1 : 0
   source    = "./modules/libvirt"
-  so        = var.so
-  instances = var.instance_count
+  instances = var.libvirt.instance_count
+  so        = var.libvirt.so
 }
 
 module "aws" {
-  count     = var.cloud_provider == "aws" ? 1 : 0
+  count     = var.aws != null ? 1 : 0
   source    = "./modules/aws"
-  instances = var.instance_count
+  instances = var.aws.instance_count
+  so        = var.aws.so
 }
 
 module "azure" {
-  count     = var.cloud_provider == "azure" ? 1 : 0
+  count     = var.azure != null ? 1 : 0
   source    = "./modules/azure"
-  instances = var.instance_count
+  instances = var.azure.instance_count
+  so        = var.azure.so
 }
 
 module "gcp" {
-  count     = var.cloud_provider == "gcp" ? 1 : 0
+  count     = var.gcp != null ? 1 : 0
   source    = "./modules/gcp"
-  instances = var.instance_count
+  instances = var.gcp.instance_count
+  so        = var.gcp.so
 }
 
 module "do" {
-  count     = var.cloud_provider == "digitalocean" ? 1 : 0
+  count     = var.digitalocean != null ? 1 : 0
   source    = "./modules/digitalocean"
-  instances = var.instance_count
+  instances = var.digitalocean.instance_count
+  so        = var.digitalocean.so
 }

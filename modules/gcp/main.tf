@@ -13,6 +13,16 @@ resource "google_service_account" "this" {
   display_name = "SA for ${local.default_name}"
 }
 
+data "google_compute_image" "ubuntu" {
+  family  = "ubuntu-2204-lts"
+  project = "ubuntu-os-cloud"
+}
+
+data "google_compute_image" "debian" {
+  family  = "debian-12"
+  project = "debian-cloud"
+}
+
 resource "google_compute_instance" "this" {
   count        = var.instances
   name         = "${local.default_name}-${count.index}"
@@ -22,7 +32,7 @@ resource "google_compute_instance" "this" {
   tags = ["http-server"]
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-12"
+      image = var.so == "ubuntu" ? data.google_compute_image.ubuntu.self_link : data.google_compute_image.debian.self_link
     }
   }
 

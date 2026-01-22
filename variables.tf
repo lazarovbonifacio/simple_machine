@@ -1,19 +1,46 @@
-variable "cloud_provider" {
-  description = "Cloud provider to provision resources. Options: aws, libvirt, azure, gcp, digitalocean"
-  type        = string
-  default     = "libvirt"
+variable "aws" {
+  description = "AWS Configuration"
+  type = object({
+    instance_count = number
+    so             = string
+  })
+  default = null
 }
 
-variable "instance_count" {
-  description = "Number of instances to create"
-  type        = number
-  default     = 1
+variable "azure" {
+  description = "Azure Configuration"
+  type = object({
+    instance_count = number
+    so             = string
+  })
+  default = null
 }
 
-variable "so" {
-  description = "Operating System (for libvirt). Options: ubuntu, debian"
-  type        = string
-  default     = "ubuntu"
+variable "gcp" {
+  description = "GCP Configuration"
+  type = object({
+    instance_count = number
+    so             = string
+  })
+  default = null
+}
+
+variable "digitalocean" {
+  description = "DigitalOcean Configuration"
+  type = object({
+    instance_count = number
+    so             = string
+  })
+  default = null
+}
+
+variable "libvirt" {
+  description = "Libvirt Configuration"
+  type = object({
+    instance_count = number
+    so             = string
+  })
+  default = null
 }
 
 variable "provider_aws_profile" {

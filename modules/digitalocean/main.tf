@@ -26,11 +26,19 @@ resource "digitalocean_vpc" "this" {
   ip_range = "172.21.0.0/24"
 }
 
+data "digitalocean_image" "ubuntu" {
+  slug = "ubuntu-22-04-x64"
+}
+
+data "digitalocean_image" "debian" {
+  slug = "debian-12-x64"
+}
+
 resource "digitalocean_droplet" "this" {
   count     = var.instances
   name      = "${local.default_name}-${count.index}"
   size      = "s-1vcpu-2gb"
-  image     = "debian-12-x64"
+  image     = var.so == "ubuntu" ? data.digitalocean_image.ubuntu.id : data.digitalocean_image.debian.id
   region    = data.digitalocean_region.this.slug
   vpc_uuid  = digitalocean_vpc.this.id
   user_data = local.default_user_data

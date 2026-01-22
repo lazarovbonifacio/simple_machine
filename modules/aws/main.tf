@@ -40,15 +40,45 @@ module "web_server_sg" {
   }
 }
 
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+data "aws_ami" "debian" {
+  most_recent = true
+  owners      = ["136693071363"] # Debian
+
+  filter {
+    name   = "name"
+    values = ["debian-12-amd64-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 module "ec2_instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.8.0"
 
   count = var.instances
 
-  name              = "simple_machine-${count.index}"
-  ami_ssm_parameter = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
-  instance_type     = "t3.micro"
+  name          = "simple_machine-${count.index}"
+  ami           = var.so == "ubuntu" ? data.aws_ami.ubuntu.id : data.aws_ami.debian.id
+  instance_type = "t3.micro"
 
   create_eip             = true
   subnet_id              = module.vpc.public_subnets[0]
